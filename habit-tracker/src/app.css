@@ -1,14 +1,61 @@
+* {
+  box-sizing: border-box;
+}
+
 button {
   outline: none;
-  border : 0;
+  border: 0;
   cursor: pointer;
 }
-.habit{
+/* navbar css*/
+.navbar {
+  font-size: 2rem;
+  padding: 1em;
+  background-color: blanchedalmond;
+}
+.navbar-logo {
+  color: green;
+  margin-right: 0.5em;
+}
+.navbar-count {
+  display: inline-block;
+  text-align: center;
+  font-size: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  margin-left: 0.2em;
+  background-color: green;
+  color: white;
+  border-radius: 50%;
+}
+
+/*add-form*/
+.add-input {
+  font-size: 2rem;
+  margin-right: 0.2em;
+  border-radius: 8px;
+}
+.add-form {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.add-button {
+  height: 100%;
+  font-size: 1.5rem;
+  padding: 0.3em 0.5em;
+  background-color: green;
+  color: white;
+}
+/* habit component*/
+.habit {
   font-size: 2.5rem;
   padding: 0.5em;
   list-style: none;
 }
-.habit-count{
+.habit-count {
   display: inline-block;
   text-align: center;
   font-size: 2rem;
@@ -22,25 +69,31 @@ button {
   border-radius: 50%;
 }
 
-.habit-button{
+.habit-button {
   font-size: 2.5rem;
   margin: 0 0.1rem;
   background-color: transparent;
 }
 
-.habit-button:hover{
+.habit-button:hover {
   opacity: 0.8;
 }
 
 .habit-increase,
-.habit-decrease{
+.habit-decrease {
   color: goldenrod;
 }
-.habit-trash{
+.habit-trash {
   font-size: 2rem;
   color: darkred;
 }
 
-
-
-
+/* reset button*/
+.habit-reset {
+  font-size: 1.5rem;
+  padding: 0.2em 1em;
+  background-color: brown;
+  color: white;
+  margin-left: 20px;
+  border-radius: 8px;
+}
