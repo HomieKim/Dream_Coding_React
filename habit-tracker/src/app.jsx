@@ -14,17 +14,24 @@ class App extends Component {
 };
 
 handleIncrease = (habit) =>{
-  const habits = [...this.state.habits];
-  const idx = habits.indexOf(habit);
-  habits[idx].count++;
+  const habits = this.state.habits.map(item =>{
+    if(item.id === habit.id){
+      const count = habit.count + 1;
+      return {...habit, count: count < 0 ? 0 : count};
+    }
+    return item
+  });
   this.setState({habits});
 };
 
 handleDecrease = (habit)=>{
-  const habits = [...this.state.habits];
-  const idx = habits.indexOf(habit);
-  const count = habits[idx].count-1;
-  habits[idx].count = count < 0 ? 0 : count;
+  const habits = this.state.habits.map(item =>{
+    if(item.id === habit.id){
+      const count = habit.count - 1;
+      return {...habit, count: count < 0 ? 0 : count};
+    }
+    return item
+  });
   this.setState({habits});
 };
 
@@ -40,8 +47,10 @@ handleAdd = name => {
 };
 handleReset= ()=>{
   const habits = this.state.habits.map(habit =>{
-    habit.count = 0;
-    return habit;
+    if(habit.count !== 0){
+      return {...habit, count : 0};
+    }
+    return habit
   });
   this.setState({habits});
 };
