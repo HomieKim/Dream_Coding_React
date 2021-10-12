@@ -1,45 +1,45 @@
-import React, { PureComponent } from 'react';
+import React, { memo } from 'react';
 
-class Habit extends PureComponent {
-    
-    handleIncrease = ()=>{
-        this.props.onIncrease(this.props.habit);
+const Habit = memo(({habit, onIncrease, onDecrease, onDelete})=>{
+
+    const handleIncrease = ()=>{
+        onIncrease(habit);
     };
 
-    handleDecrease = ()=>{
-        this.props.onDecrease(this.props.habit);
+    const handleDecrease = ()=>{
+        onDecrease(habit);
     };
 
-    handleDelete = ()=>{
-        this.props.onDelete(this.props.habit);
+    const handleDelete = ()=>{
+        onDelete(habit);
     };
 
-    render() {
-        const {name, count} = this.props.habit; // habit 안에 있는 name과 count가 들어감(동일 해야함)
+    return (
+        <li className="habit">
+        <span className="habit-name">{habit.name}</span>
+        <span className="habit-count">{habit.count}</span>
+        <button 
+        className="habit-button habit-increase" 
+        onClick={handleIncrease}
+        >
+        <i className="fas fa-plus-square"></i>
+        </button>
+        <button 
+        className="habit-button habit-decrease"
+        onClick={handleDecrease}
+        >
+        <i className="fas fa-minus-square"></i>
+        </button>
+        <button className="habit-button habit-trash"
+        onClick={handleDelete}
+        >
+        <i className="fas fa-trash"></i>
+        </button>
+        </li>
+    ); 
+});
 
-        return (
-            <li className="habit">
-            <span className="habit-name">{name}</span>
-            <span className="habit-count">{count}</span>
-            <button 
-            className="habit-button habit-increase" 
-            onClick={this.handleIncrease}
-            >
-            <i className="fas fa-plus-square"></i>
-            </button>
-            <button 
-            className="habit-button habit-decrease"
-            onClick={this.handleDecrease}
-            >
-            <i className="fas fa-minus-square"></i>
-            </button>
-            <button className="habit-button habit-trash"
-            onClick={this.handleDelete}
-            >
-            <i className="fas fa-trash"></i>
-            </button>
-            </li>
-        ); 
-    }        
-}
 export default Habit;
+
+
+
