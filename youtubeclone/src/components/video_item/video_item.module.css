@@ -15,7 +15,7 @@
 .video:hover{
     transform: scale(1.02);
 }
-.imgcontainer{
+.imgContainer{
     width: 40%;
 }
 .thumbnail{
