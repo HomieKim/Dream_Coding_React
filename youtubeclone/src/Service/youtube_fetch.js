@@ -1,4 +1,6 @@
-class Youtube {
+
+// use fetch
+class YoutubeFatch {
   constructor(key) {
     this.key = key;
     this.getRequestOptions = {
@@ -26,4 +28,4 @@ class Youtube {
   }
 }
 
-export default Youtube;
+export default YoutubeFatch;
