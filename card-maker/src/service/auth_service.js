@@ -17,6 +17,9 @@ class AuthService {
         return signInWithPopup(this.firebaseAuth, authProvider);
 
     }
+    logout(){
+      this.firebaseAuth.signOut();
+    }
     getProvider(providerName) {
         switch (providerName) {
           case 'Google':
@@ -26,7 +29,15 @@ class AuthService {
           default:
             throw new Error(`not supported provider: ${providerName}`);
         }
-      }
+    }
+
+    onAuthChange(onUserChanged){
+      this.firebaseAuth.onAuthStateChanged((user)=>{
+        onUserChanged(user);
+      })
+    }
+
+
 }
 
 export default AuthService;
