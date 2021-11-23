@@ -1,0 +1,9 @@
+@value makerGreen from '/src/common/colors.css';
+.preview{
+    flex-basis: 50%;
+    background-color: darksalmon;
+}
+
+.title{
+    color : makerGreen
+}
