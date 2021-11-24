@@ -7,3 +7,13 @@
 .title{
     color : makerGreen
 }
+
+.cards{
+    list-style: none;
+    width : 100%;
+    height: 100%;
+    padding: 0.5em 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
