@@ -1,14 +1,29 @@
 import React from "react";
+import Button from "../../Button/button";
+import ImgInput from '../../img_input/img_input';
 import styles from "./card_edit_form.module.css";
 const CardEditForm = ({ card }) => {
-  const { name, school, title, email, message, theme, fileName, fileURL } =card;
+  const { name, school, title, email, message, theme, fileName, fileURL } =
+    card;
+
+  const onSubmit = () => {};
   return (
-    <from>
-      <input type="text" name="name" value={name} />
-      <input type="text" name="school" value={school} />
-      <input type="text" name="title" value={title} />
-      <input type="text" name="email" value={email} />
-    </from>
+    <form className={styles.form}>
+      <input className={styles.input} type="text" name="name" value={name} />
+      <input className={styles.input} type="text" name="school" value={school} />
+      <select className={styles.select} name="theme" value={theme}>
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+        <option value="colorful">Colorful</option>
+      </select>
+      <input className={styles.input} type="text" name="title" value={title} />
+      <input className={styles.input} type="text" name="email" value={email} />
+      <textarea className={styles.textarea} name="message" value={message}></textarea>
+      <div className={styles.fileInput}>
+      <ImgInput />
+      </div>
+      <Button name="Delete" onClick={onSubmit} />
+    </form>
   );
 };
 
