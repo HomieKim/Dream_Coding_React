@@ -1,11 +1,14 @@
 @value makerGreen from '/src/common/colors.css';
 .preview{
     flex-basis: 50%;
-    background-color: darksalmon;
 }
 
 .title{
-    color : makerGreen
+    color : makerGreen;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+
 }
 
 .cards{
