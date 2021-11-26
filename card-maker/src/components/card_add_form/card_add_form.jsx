@@ -1,27 +1,55 @@
-import React from "react";
+import React, { useRef } from "react";
 import Button from "../button/button";
 import ImgInput from '../img_input/img_input';
 import styles from "./card_add_form.module.css";
 
-const CardAddForm = () => {
-  const onSubmit = () => {};
+const CardAddForm = ({onAdd}) => {
+  const formRef = useRef();
+  const nameRef = useRef();
+  const textRef = useRef();
+  const themeRef = useRef();
+  const titleRef = useRef();
+  const emailRef = useRef();
+  const messageRef = useRef();
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const card = {
+      id: Date.now(),
+      name : nameRef.current.value || '',
+      text : textRef.current.value || '',
+      theme : themeRef.current.value || '',
+      title : titleRef.current.value || '',
+      email : emailRef.current.value || '',
+      message : messageRef.current.value || '',
+      fileName : '',
+      fileURL : '',
+    }
+    formRef.current.reset();
+    onAdd(card);
+
+  };
   return (
-    <form className={styles.form}>
-      <input className={styles.input} type="text" name="name" placeholder="Name" />
-      <input
+    <form ref={formRef} className={styles.form}>
+      <input ref={nameRef} 
+        className={styles.input} 
+        type="text" 
+        name="name" 
+        placeholder="Name" />
+      <input ref={textRef}
         className={styles.input}
         type="text"
         name="school"
         placeholder="School"
       />
-      <select className={styles.select} name="theme" placeholder="Theme">
-        <option placeholder="dark">Dark</option>
-        <option placeholder="light">Light</option>
-        <option placeholder="colorful">Colorful</option>
+      <select ref={themeRef} className={styles.select} name="theme" placeholder="Theme">
+        <option placeholder="dark">dark</option>
+        <option placeholder="light">light</option>
+        <option placeholder="colorful">colorful</option>
       </select>
-      <input className={styles.input} type="text" name="title" placeholder="Title" />
-      <input className={styles.input} type="text" name="email" placeholder="E-mail" />
-      <textarea
+      <input  ref={titleRef} className={styles.input} type="text" name="title" placeholder="Title" />
+      <input ref={emailRef} className={styles.input} type="text" name="email" placeholder="E-mail" />
+      <textarea ref={messageRef}
         className={styles.textarea}
         name="message"
         placeholder="Message"
