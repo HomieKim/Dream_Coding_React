@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "../../Button/button";
-import ImgInput from '../../img_input/img_input';
+import Button from "../button/button";
+import ImgInput from '../img_input/img_input';
 import styles from "./card_edit_form.module.css";
 const CardEditForm = ({ card }) => {
   const { name, school, title, email, message, theme, fileName, fileURL } =
