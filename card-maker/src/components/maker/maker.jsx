@@ -1,89 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import Editor from '../editor/editor';
-import Footer from '../footer/footer';
-import Header from '../header/header';
-import Preview from '../preview/preview';
-import styles from './maker.module.css';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
+import Editor from "../editor/editor";
+import Footer from "../footer/footer";
+import Header from "../header/header";
+import Preview from "../preview/preview";
+import styles from "./maker.module.css";
 
-const Maker = ({FileInput, authService})=>{
-    const [cards, setCards] = useState({
-        '1':{
-            id:'1',
-            name:'homie',
-            school:'donga',
-            title:'student',
-            theme:'light',
-            email:'homie@gmail.com',
-            message:'go for it',
-            fileName: null,
-            fileURL : null
-        },
-        '2':{
-            id:'2',
-            name:'jenny',
-            school:'bugeong',
-            title:'Developer',
-            theme:'dark',
-            email:'homie@gmail.com',
-            message:'do it for fun',
-            fileName: null,
-            fileURL : null
-    
-        },
-        '3':{
-            id:'3',
-            name:'rose',
-            school:'busan',
-            title:'Engineer',
-            theme:'colorful',
-            email:'homie@gmail.com',
-            message:'Yes i do',
-            fileName: null,
-            fileURL : null
-    
-        },
-    });
-    
-    const navigate = useNavigate();
-    const onLogout = ()=>{
-        authService.logout();
-    };
-    useEffect(()=>{
-        authService.onAuthChange(user=>{
-            if(!user){
-                navigate('/');
-            }
-        });
-    });
+const Maker = ({ FileInput, authService, cardRepository }) => {
+  const location = useLocation();
+  const locationState = location?.state;
+  const navigate = useNavigate();
+  const [cards, setCards] = useState({});
+  const [userId, setUserId] = useState(locationState && locationState.id);
 
- 
-    const createOrupdateCard = card =>{
-        // state를 업데이트를 할 때 이전상태를 유지해야 하는 게 중요 업데이트 시점에 따라 동기적으로 안될 수 있다
-        // 이를 피하기 위해 setCards에 콜백함수로 전달해 이전의 상태값을 유지
-        setCards(cards=>{
-            const updated = {...cards};
-            updated[card.id] = card;
-            return updated;
-        });
-    }
-    const deleteCard = card =>{
-        setCards(cards=>{
-            const updated = {...cards};
-            delete updated[card.id];
-            return updated;
-        });
-    }
-    return (
-        <section className={styles.maker}>
-            <Header onLogout={onLogout}/>
-            <div className={styles.container}>
-                <Editor FileInput={FileInput} cards={cards} addCard={createOrupdateCard} updateCard={createOrupdateCard} deleteCard={deleteCard}/>
-                <Preview cards={cards}/>
-            </div>
-            <Footer/>
-        </section>
-    )
+  const onLogout = () => {
+    authService.logout();
+  };
+
+  useEffect(() => {
+      if(!userId){
+          return;
+      }
+      const stopSync = cardRepository.syncCards(userId, cards =>{
+        setCards(cards);
+      });
+      return () => stopSync();
+  },[userId]);
+
+  useEffect(() => {
+    authService.onAuthChange((user) => {
+      if (user) {
+        setUserId(user.uid);
+      } else {
+        navigate("/");
+      }
+    });
+  });
+
+  const createOrupdateCard = (card) => {
+    // state를 업데이트를 할 때 이전상태를 유지해야 하는 게 중요 업데이트 시점에 따라 동기적으로 안될 수 있다
+    // 이를 피하기 위해 setCards에 콜백함수로 전달해 이전의 상태값을 유지
+    setCards((cards) => {
+      const updated = { ...cards };
+      updated[card.id] = card;
+      return updated;
+    });
+    cardRepository.saveCard(userId, card);
+  };
+  const deleteCard = (card) => {
+    setCards((cards) => {
+      const updated = { ...cards };
+      delete updated[card.id];
+      return updated;
+    });
+    cardRepository.removeCard(userId, card);
+  };
+  return (
+    <section className={styles.maker}>
+      <Header onLogout={onLogout} />
+      <div className={styles.container}>
+        <Editor
+          FileInput={FileInput}
+          cards={cards}
+          addCard={createOrupdateCard}
+          updateCard={createOrupdateCard}
+          deleteCard={deleteCard}
+        />
+        <Preview cards={cards} />
+      </div>
+      <Footer />
+    </section>
+  );
 };
 
 export default Maker;

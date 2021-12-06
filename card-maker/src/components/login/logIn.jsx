@@ -15,7 +15,7 @@ const LogIn = ({ authService }) => {
     .login(event.currentTarget.textContent)
     .then(data => goToMaker(data.user.uid));
   };
-
+  // 로그인 되어있으면 자동으로 goToMaker
   useEffect(()=>{
     authService.onAuthChange(user=>{
       user && goToMaker(user.uid);
