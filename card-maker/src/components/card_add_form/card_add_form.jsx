@@ -1,12 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import Button from "../button/button";
 
 import styles from "./card_add_form.module.css";
 
-const CardAddForm = ({FileInput, onAdd}) => {
+const CardAddForm = memo(({FileInput, onAdd}) => {
   const formRef = useRef();
   const nameRef = useRef();
-  const textRef = useRef();
+  const schoolRef = useRef();
   const themeRef = useRef();
   const titleRef = useRef();
   const emailRef = useRef();
@@ -26,7 +26,7 @@ const CardAddForm = ({FileInput, onAdd}) => {
     const card = {
       id: Date.now(),
       name : nameRef.current.value || '',
-      text : textRef.current.value || '',
+      school : schoolRef.current.value || '',
       theme : themeRef.current.value || '',
       title : titleRef.current.value || '',
       email : emailRef.current.value || '',
@@ -45,7 +45,7 @@ const CardAddForm = ({FileInput, onAdd}) => {
         type="text" 
         name="name" 
         placeholder="Name" />
-      <input ref={textRef}
+      <input ref={schoolRef}
         className={styles.input}
         type="text"
         name="school"
@@ -69,6 +69,6 @@ const CardAddForm = ({FileInput, onAdd}) => {
       <Button name="Add" onClick={onSubmit} />
     </form>
   );
-};
+});
 
 export default CardAddForm;

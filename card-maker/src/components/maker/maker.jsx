@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import Editor from "../editor/editor";
 import Footer from "../footer/footer";
@@ -13,9 +13,9 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
   const [cards, setCards] = useState({});
   const [userId, setUserId] = useState(locationState && locationState.id);
 
-  const onLogout = () => {
+  const onLogout = useCallback(() => {
     authService.logout();
-  };
+  }, [authService]); // useCallback 사용시 컴포넌트가 업데이트되어도 (즉, props나 state가 변경되어도 새로 호출되어지지 않음, 그러니까 authService변경시에는 새로 호출되어야 함)
 
   useEffect(() => {
       if(!userId){
@@ -25,7 +25,7 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
         setCards(cards);
       });
       return () => stopSync();
-  },[userId]);
+  },[userId, cardRepository]);
 
   useEffect(() => {
     authService.onAuthChange((user) => {
@@ -35,7 +35,7 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
         navigate("/");
       }
     });
-  });
+  },[userId, authService, navigate]);
 
   const createOrupdateCard = (card) => {
     // state를 업데이트를 할 때 이전상태를 유지해야 하는 게 중요 업데이트 시점에 따라 동기적으로 안될 수 있다

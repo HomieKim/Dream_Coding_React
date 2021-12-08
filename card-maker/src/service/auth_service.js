@@ -9,8 +9,8 @@ import {
 class AuthService {
     constructor(){
         this.firebaseAuth = getAuth();
-        this.googleProvider = new GoogleAuthProvider;
-        this.githubProvider = new GithubAuthProvider;
+        this.googleProvider = new GoogleAuthProvider();
+        this.githubProvider = new GithubAuthProvider();
     }
     login(providerName){
         const authProvider = this.getProvider(providerName);
